@@ -1,3 +1,6 @@
+# script to collect images for the dataset 
+#vfor now, using only ASL alphabet
+
 import cv2
 import os 
 
@@ -21,7 +24,7 @@ for i in range(amountClass):
     done = False
     while True:
         ret, frame = capture.read()
-        cv2.putText(frame, "press q to start", (100, 50), cv2.FONT_HERSHEY_PLAIN, 1.3, (0, 255, 0), 3, cv2.LINE_AA)
+        cv2.putText(frame, "press q to start", (100, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3, cv2.LINE_AA)
         cv2.imshow("frame", frame)
         if cv2.waitKey(25) == ord("q"):
             break
