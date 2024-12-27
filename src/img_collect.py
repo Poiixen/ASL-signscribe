@@ -9,7 +9,7 @@ data = "./data"
 if not os.path.exists(data):
     os.makedirs(data)
 
-size_dataset = 100
+size_dataset = 150
 amountClass = 26    
 
 
