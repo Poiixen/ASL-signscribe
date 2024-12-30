@@ -42,9 +42,9 @@ for dir_ in os.listdir(data):
                     data_aux.append(x - min(x_))
                     data_aux.append(y - min(y_))
 
-            data_arr.append(data_aux)
+            data.append(data_aux)
             labels.append(dir_)
 
-f = open("data.pickle", "wb")
+f = open('data.pickle', 'wb')
 pickle.dump({'data': data, 'labels': labels}, f)
 f.close()
