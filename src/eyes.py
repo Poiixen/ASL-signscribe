@@ -19,7 +19,6 @@ labls_dict = {
 
 
 while True:
-
     data_aux = []
     ret, frame = cam.read()
     
@@ -40,19 +39,14 @@ while True:
                 mp_drawing_styles.get_default_hand_landmarks_style(),
                 mp_drawing_styles.get_default_hand_connections_style()    
             )
-        for hand_landmarks in results.multi_hand_landmarks:
-            for point in range(len(hand_landmarks.landmark)):
-                x = hand_landmarks.landmark[point].x
-                y = hand_landmarks.landmark[point].y
-                x_.append(x)
-                y_.append(y)
-            
-            for point in range(len(hand_landmarks.landmark)):
-                x = hand_landmarks.landmark[point].x
-                y = hand_landmarks.landmark[point].y
-                data_aux.append(x - min(x_))
-                data_aux.append(y - min(y_))
         
+        x_ = [landmark.x for landmark in hand_landmarks.landmark]
+        y_ = [landmark.y for landmark in hand_landmarks.landmark]
+        
+        for point in hand_landmarks.landmark:
+            data_aux.append(point.x - min(x_))
+            data_aux.append(point.y - min(y_))
+                
         x1 = int(min(x_) * Width) - 10
         y1 = int(min(y_) * Height) - 10
 
@@ -64,7 +58,7 @@ while True:
         predicted_label = labls_dict[int(pred[0])]
 
         cv2. rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
-        cv2.putText(frame, predicted_label, (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3, cv2.LINE_AA)
+        cv2.putText(frame, predicted_label, (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3, cv2.LINE_AA)
 
     cv2.imshow("frame", frame)
     cv2.waitKey(1)
