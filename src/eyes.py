@@ -46,13 +46,18 @@ while True:
                 mp_drawing_styles.get_default_hand_connections_style()
             )
         
-        x_ = [landmark.x for landmark in hand_landmarks.landmark]
-        y_ = [landmark.y for landmark in hand_landmarks.landmark]
-        
-        for point in hand_landmarks.landmark:
-            data_aux.append(point.x - min(x_))
-            data_aux.append(point.y - min(y_))
-                
+        for i in range(len(hand_landmarks.landmark)):
+            x_.append(hand_landmarks.landmark[i].x)
+            y_.append(hand_landmarks.landmark[i].y)
+
+        for i in range(len(hand_landmarks.landmark)):
+            data_aux.append(hand_landmarks.landmark[i].x - min(x_))
+            data_aux.append(hand_landmarks.landmark[i].y - min(y_))
+
+        if len(data_aux) < 84:
+            data_aux.extend([0] * (84 - len(data_aux)))
+
+
         x1 = int(min(x_) * Width) - 10
         y1 = int(min(y_) * Height) - 10
 
