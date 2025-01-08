@@ -88,6 +88,18 @@ header p {
     margin-bottom: 30px;
 }
 
+#ro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 50px 20px;
+    text-align: center;
+    background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+    margin-bottom: 30px;
+}
+
 #hero p {
     font-size: 1.2rem;
     margin-bottom: 20px;
@@ -129,5 +141,9 @@ img {
     max-width: 40%;
     max-height: 50%;
     padding: 2%;
+}
+
+#webcamVideo {
+    padding:2%;
 }
 
