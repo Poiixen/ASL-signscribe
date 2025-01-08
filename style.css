@@ -52,6 +52,16 @@ header p {
     
 }
 
+#start {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 50px 20px;
+    text-align: center;
+}
+
 #phrase{
     font-size: 80px;
     font-family: 'Poppins', Arial, Helvetica, sans-serif;
@@ -74,7 +84,7 @@ header p {
     padding: 50px 20px;
     text-align: center;
     background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
-    margin-top: 30%;
+    margin-top: 50px;
     margin-bottom: 30px;
 }
 
@@ -107,5 +117,17 @@ footer {
     text-align: left;
     padding: 10px 30px;
     font-size: 0.9rem;
+}
+
+.container {
+    display: flex;
+    align-items:center;
+    justify-content: center;
+}
+
+img {
+    max-width: 40%;
+    max-height: 50%;
+    padding: 2%;
 }
 
