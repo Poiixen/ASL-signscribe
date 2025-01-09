@@ -51,7 +51,6 @@ while True:
         if len(data_aux) < 84:
             data_aux.extend([0] * (84 - len(data_aux)))
 
-
         x1 = int(min(x_) * Width) - 10
         y1 = int(min(y_) * Height) - 10
 
