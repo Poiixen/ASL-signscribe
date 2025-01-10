@@ -7,10 +7,12 @@ let isProcessing = false;
 // Access the camera feed
 navigator.mediaDevices.getUserMedia({ video: true })
     .then(stream => {
+        console.log("Webcam feed accessed successfully");
         video.srcObject = stream;
     })
     .catch(err => {
         console.error("Error accessing the camera:", err);
+        alert("Unable to access the webcam. Please check browser permissions.");
     });
     
 function processFrames() {
@@ -34,3 +36,4 @@ function processFrames() {
         }
     });
 };
+

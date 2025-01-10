@@ -81,20 +81,23 @@ def screen():
 
 @app.route('/process_frames', methods=['POST'])
 def process_frames_endpoint():
-    # Receive the frame from the frontend
-    frame_data = request.json['frame']
-    frame_bytes = base64.b64decode(frame_data.split(',')[1])
-    nparr = np.frombuffer(frame_bytes, np.uint8)
-    frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    try:
+        frame_data = request.json['frame']
+        frame_bytes = base64.b64decode(frame_data.split(',')[1])
+        nparr = np.frombuffer(frame_bytes, np.uint8)
+        frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-    # Process the frame
-    processed_frame = process_frame_data(frame)
+        # Process the frame
+        processed_frame = process_frame_data(frame)
 
-    # Convert the processed frame back to base64
-    _, buffer = cv2.imencode('.jpg', processed_frame)
-    processed_frame_b64 = base64.b64encode(buffer).decode('utf-8')
+        # Convert the processed frame back to Base64
+        _, buffer = cv2.imencode('.jpg', processed_frame)
+        processed_frame_b64 = base64.b64encode(buffer).decode('utf-8')
 
-    return jsonify({'processed_frame': processed_frame_b64})
+        return jsonify({'processed_frame': processed_frame_b64})
+    except Exception as e:
+        print(f"Error in /process_frames: {e}")
+        return jsonify({'error': 'Frame processing failed'}), 500
 
 if __name__ == '__main__':
     app.run()
