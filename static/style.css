@@ -75,18 +75,7 @@ header p {
     margin-top: 150px;
 }
 
-#phrase2{
-    font-size: 80px;
-    font-family: 'Poppins', Arial, Helvetica, sans-serif;
-    font-style: bold;
-    align-items:center;
-    justify-content: center;
-    width: 100%;
-    padding: 50px 350px;
-    text-align: center;
-    color: #ffffff;
-    margin-top: 150px;
-}
+
 
 #hero {
     display: flex;
