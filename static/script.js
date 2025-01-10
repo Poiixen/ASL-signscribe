@@ -10,51 +10,27 @@ navigator.mediaDevices.getUserMedia({ video: true })
         video.srcObject = stream;
     })
     .catch(err => {
-        console.error("Camera access error:", err);
+        console.error("Error accessing the camera:", err);
     });
-
-function processFrame() {
+    
+function processFrames() {
     if (!isProcessing) return;
 
-    // Draw the video frame to the canvas
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    requestAnimationFrame(processFrames);
+
     const frameData = canvas.toDataURL('image/jpeg');
 
-    // Send the frame to the Flask backend
-    fetch('/process_frame', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ frame: frameData }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        const img = new Image();
-        img.onload = () => {
-            // Draw the processed frame back to the canvas
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            requestAnimationFrame(processFrame);
-        };
-        img.src = 'data:image/jpeg;base64,' + data.processed_frame;
-    })
-    .catch(error => {
-        console.error('Error processing frame:', error);
-        requestAnimationFrame(processFrame);
+    video.addEventListener('loadedmetadata', () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
     });
-}
 
-// Set canvas size once video metadata is loaded
-video.addEventListener('loadedmetadata', () => {
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-});
-
-// Start/stop the detection loop
-startButton.addEventListener('click', () => {
-    isProcessing = !isProcessing;
-    startButton.textContent = isProcessing ? 'Stop Detection' : 'Start Detection';
-    if (isProcessing) {
-        processFrame();
-    }
-});
+    startButton.addEventListener('click', () => {
+        isProcessing = !isProcessing;
+        startButton.textContent = isProcessing ? 'Stop Detection' : 'Start Detection';
+        if (isProcessing) {
+            processFrames();
+        }
+    });
+};
