@@ -1,0 +1,4 @@
+{
+    "builds": [{"src": "src/eyes.py", "use": "@vercel/python"}],
+    "routes": [{"src": "/(.*)", "dest": "eyes.py"}]
+}

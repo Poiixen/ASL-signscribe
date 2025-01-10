@@ -117,4 +117,4 @@ def process_frames_endpoint():
     return jsonify({'processed_frame': processed_frame_b64})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
