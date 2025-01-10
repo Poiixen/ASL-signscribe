@@ -33,6 +33,7 @@ def process_frame_data(frame):
 
     Height, Width, _ = frame.shape
     img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    frame = cv2.resize(frame, (320, 240)) 
 
     results = hands.process(img_rgb)
     if results.multi_hand_landmarks:
