@@ -17,6 +17,5 @@
     "routes": [
       { "src": "/(.*)", "dest": "src/eyes.py" }
     ],
-    "rewrites": [{ "source": "/(.*)", "destination": "/" }] 
   }
   
