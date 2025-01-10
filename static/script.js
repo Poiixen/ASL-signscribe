@@ -1,60 +1,66 @@
 const video = document.getElementById('camera-feed');
 const canvas = document.getElementById('output-canvas');
 const ctx = canvas.getContext('2d');
-const startButton = document.getElementById('start-button');
-let isProcessing = false;
+let frameCounter = 0;
+const PROCESS_EVERY_NTH_FRAME = 5; // Process every 5th frame
 
-// Access the camera feed
 navigator.mediaDevices.getUserMedia({ video: true })
     .then(stream => {
         video.srcObject = stream;
+
+        // Start processing frames when the video feed is ready
+        video.addEventListener('loadeddata', () => {
+            processFrame(); // Start live processing
+        });
     })
     .catch(err => {
-        console.error("Camera access error:", err);
+        console.error("Error accessing camera:", err);
+        alert("Please allow camera access to use this feature.");
     });
 
 function processFrame() {
-    if (!isProcessing) return;
+    // Skip frames to reduce backend load
+    frameCounter++;
+    if (frameCounter % PROCESS_EVERY_NTH_FRAME !== 0) {
+        requestAnimationFrame(processFrame);
+        return;
+    }
 
-    // Draw the video frame to the canvas
+    const TARGET_WIDTH = 320; // Reduce to 320px width
+    const TARGET_HEIGHT = (video.videoHeight / video.videoWidth) * TARGET_WIDTH;
+    canvas.width = TARGET_WIDTH;
+    canvas.height = TARGET_HEIGHT;
+
+    // Draw the current video frame on the canvas
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // Convert the canvas content to Base64 image
     const frameData = canvas.toDataURL('image/jpeg');
 
-    // Send the frame to the Flask backend
-    fetch('/process_frame', {
+    // Send frame to backend for processing
+    fetch('/process_frames', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ frame: frameData }),
     })
-    .then(response => response.json())
-    .then(data => {
-        const img = new Image();
-        img.onload = () => {
-            // Draw the processed frame back to the canvas
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            requestAnimationFrame(processFrame);
-        };
-        img.src = 'data:image/jpeg;base64,' + data.processed_frame;
-    })
-    .catch(error => {
-        console.error('Error processing frame:', error);
-        requestAnimationFrame(processFrame);
-    });
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error("Error from backend:", data.error);
+                return;
+            }
+
+            // Render processed frame on the canvas
+            const img = new Image();
+            img.onload = () => {
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+            img.src = 'data:image/jpeg;base64,' + data.processed_frame;
+        })
+        .catch(error => {
+            console.error("Error processing frame:", error);
+        });
+
+    // Request next frame
+    requestAnimationFrame(processFrame);
 }
-
-// Set canvas size once video metadata is loaded
-video.addEventListener('loadedmetadata', () => {
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-});
-
-// Start/stop the detection loop
-startButton.addEventListener('click', () => {
-    isProcessing = !isProcessing;
-    startButton.textContent = isProcessing ? 'Stop Detection' : 'Start Detection';
-    if (isProcessing) {
-        processFrame();
-    }
-});

@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +14,6 @@ body {
     justify-content: space-between;
     min-height: 100vh;
     background-color: #f4f4f4;
-    background-color: white;
     color: #333;
 }
 
@@ -31,12 +29,9 @@ header {
     border-bottom: 1px solid #ddd;
     display: flex;
     align-items: center;
-    
     justify-content: space-between; /* Centers content horizontally */
     gap: 20px;
 }
-
-
 
 header h1 {
     font-size: 2rem;
@@ -49,7 +44,6 @@ header h1 {
 header p {
     font-size: 1rem;
     color: #666;
-    
 }
 
 #start {
@@ -62,11 +56,11 @@ header p {
     text-align: center;
 }
 
-#phrase{
+#phrase {
     font-size: 80px;
     font-family: 'Poppins', Arial, Helvetica, sans-serif;
     font-style: bold;
-    align-items:center;
+    align-items: center;
     justify-content: center;
     width: 100%;
     padding: 50px 350px;
@@ -131,19 +125,63 @@ footer {
     font-size: 0.9rem;
 }
 
-.container {
-    display: flex;
-    align-items:center;
-    justify-content: center;
-}
-
 img {
-    max-width: 40%;
-    max-height: 50%;
     padding: 2%;
 }
 
 #webcamVideo {
-    padding:2%;
+    padding: 2%;
 }
 
+/* New styles for side-by-side layout */
+.container {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Align items vertically */
+    gap: 40px; /* Space between camera feed and chart */
+    margin: 30px auto; /* Add margin around the container */
+    max-width: 95%; /* Limit the container width */
+}
+
+/* Camera feed container */
+#camera-container {
+    position: relative;
+    width: 640px; /* Fixed width for proper aspect ratio */
+    height: 480px; /* Fixed height */
+    border: 2px solid #ddd; /* Optional: Add a border */
+    border-radius: 10px; /* Optional: Rounded corners */
+    overflow: hidden; /* Ensure canvas does not overflow */
+    background-color: #000; /* Black background for better visibility */
+}
+
+/* Video feed styling */
+#camera-feed {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Prevent compression by maintaining aspect ratio */
+    display: block;
+}
+
+/* Canvas overlay */
+#output-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Prevent interaction with the canvas */
+}
+
+/* ASL chart container */
+#asl-chart-container {
+    text-align: center;
+    max-width: 600px; /* Increased max-width for larger chart */
+}
+
+#asl-chart {
+    width: 100%;
+    height: auto;
+    border: 2px solid #ddd; /* Optional: Add a border */
+    border-radius: 10px; /* Optional: Rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+}
