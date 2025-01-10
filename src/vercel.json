@@ -17,6 +17,7 @@
     "routes": [
       { "src": "/api/(.*)", "dest": "src/index.py" },
       { "src": "/(.*)", "dest": "/templates/screen.html" }
-    ]
+    ],
+    "rewrites": [{ "source": "/(.*)", "destination": "/" }] 
   }
   
