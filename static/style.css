@@ -75,6 +75,19 @@ header p {
     margin-top: 150px;
 }
 
+#phrase2{
+    font-size: 80px;
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    font-style: bold;
+    align-items:center;
+    justify-content: center;
+    width: 100%;
+    padding: 50px 350px;
+    text-align: center;
+    color: #ffffff;
+    margin-top: 150px;
+}
+
 #hero {
     display: flex;
     flex-direction: column;
@@ -83,7 +96,7 @@ header p {
     width: 100%;
     padding: 50px 20px;
     text-align: center;
-    background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+    background-color: #0056b3;
     margin-top: 50px;
     margin-bottom: 30px;
 }
@@ -105,6 +118,13 @@ header p {
     margin-bottom: 20px;
     max-width: 600px;
     color: #555;
+}
+
+#hero p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    max-width: 600px;
+    color: #ffffff;
 }
 
 .button {
