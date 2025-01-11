@@ -1,6 +1,6 @@
 #a.k.a. app.py
 
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, Response
 import cv2
 import mediapipe as mp
 import pickle
@@ -25,6 +25,30 @@ labls_dict = {
 19: "T", 20: "U", 21: "V", 22: "W", 23: "X", 24: "Y", 25: "Z",
 }
 
+# REMOVE THIS FUNCTION IF YOU ARE PLANNING TO HOST THE APP ON A PUBLIC SERVER
+# This function is only used to generate frames for the local webcam stream
+def generate_frames():
+    camera = cv2.VideoCapture(0)  # Open the webcam
+    while True:
+        success, frame = camera.read()
+        if not success:
+            break
+        else:
+            frame = process_frame_data(frame)  # Process each frame
+            _, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+
+#REMOVE THIS ROUTE IF YOU ARE PLANNING TO HOST THE APP ON A PUBLIC SERVER
+# This route is only used to generate frames for the local webcam stream
+@app.route('/video_feed')
+def video_feed():
+    
+    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 def process_frame_data(frame):
     data_aux = []    
@@ -33,7 +57,7 @@ def process_frame_data(frame):
 
     Height, Width, _ = frame.shape
     img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    frame = cv2.resize(frame, (320, 240)) 
+ 
 
     results = hands.process(img_rgb)
     if results.multi_hand_landmarks:
@@ -71,11 +95,8 @@ def process_frame_data(frame):
 
     return frame
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
-@app.route('/screen')
+@app.route('/')
 def screen():
     return render_template('screen.html')
 
@@ -89,17 +110,15 @@ def process_frames_endpoint():
         return jsonify({"error": "No frame data received"}), 400
 
     try:
-        # Decode Base64-encoded frame
         frame_bytes = base64.b64decode(frame_data.split(',')[1])
         nparr = np.frombuffer(frame_bytes, np.uint8)
         frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     except Exception as e:
         return jsonify({"error": f"Error decoding frame: {e}"}), 500
 
-    # Process the frame
+
     processed_frame = process_frame_data(frame)
 
-    # Encode the processed frame back to Base64
     _, buffer = cv2.imencode('.jpg', processed_frame)
     processed_frame_b64 = base64.b64encode(buffer).decode('utf-8')
 

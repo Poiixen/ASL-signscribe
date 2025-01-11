@@ -1,35 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASL Detector</title>
     <link rel="stylesheet" href="/static/style.css">
     <script src="/static/script.js" defer></script>
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
 </head>
+
 <body>
     <header>
         <h1>ASL Detector</h1>
-        <a href="/" class="button">Back to Main</a>
     </header>
     <main>
-        <div class="container">
-            <!-- Camera feed and overlay -->
-            <div id="camera-container">
-                <video id="camera-feed" autoplay muted playsinline></video>
-                <canvas id="output-canvas"></canvas>
+        <div class="video-container">
+            <div class="video-box">
+                <img id="video-stream" src="/video_feed" alt="Webcam Feed">
             </div>
-
-            <!-- ASL alphabet chart -->
-            <div id="asl-chart-container">
-                <img id="asl-chart" src="/static/asl.jpg" alt="ASL Alphabet">
+            <div class="asl-chart-box">
+                <img id="output-canvas" src="/static/asl.jpg" alt="ASL Alphabet">
             </div>
-        </div>
-
-        <div id="ro">
-            <p>The mission: Detect ASL signs in real-time</p>
         </div>
     </main>
 </body>
+
 </html>

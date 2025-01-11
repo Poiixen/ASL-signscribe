@@ -1,187 +1,72 @@
-* {
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
 }
 
-/* Body Styling */
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-/* Header */
 header {
-    position: sticky;
-    top: 0;
-    background-color: rgb(255, 255, 255, 1);
-    box-shadow: 0px 1px 10px lightgray;
-    padding: 20px 30px;
-    width: 100%;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Centers content horizontally */
-    gap: 20px;
+    text-align: center;
+    padding: 10px 0; /* Reduced padding */
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
+    margin: 0;
     font-size: 2rem;
-    font-weight: bold;
-    font-family: 'Poppins', Arial, Helvetica, sans-serif;
     color: #007bff;
-    margin-bottom: 10px;
 }
 
-header p {
-    font-size: 1rem;
-    color: #666;
-}
-
-#start {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 50px 20px;
-    text-align: center;
-}
-
-#phrase {
-    font-size: 80px;
-    font-family: 'Poppins', Arial, Helvetica, sans-serif;
-    font-style: bold;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 50px 350px;
-    text-align: center;
-    color: #000000;
-    margin-top: 150px;
-}
-
-#hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 50px 20px;
-    text-align: center;
-    background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
-    margin-top: 50px;
-    margin-bottom: 30px;
-}
-
-#ro {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 50px 20px;
-    text-align: center;
-    background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
-    margin-bottom: 30px;
-}
-
-#hero p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    max-width: 600px;
-    color: #555;
-}
-
-.button {
+header .button {
+    text-decoration: none;
     padding: 10px 20px;
     background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 50px;
-    font-family: 'Poppins', Arial, Helvetica, sans-serif;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
+    color: #ffffff;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+    display: inline-block;
 }
 
-.button:hover {
+header .button:hover {
     background-color: #0056b3;
 }
 
-/* Footer */
-footer {
-    width: 100%;
-    color: #333;
-    text-align: left;
-    padding: 10px 30px;
-    font-size: 0.9rem;
-}
-
-img {
-    padding: 2%;
-}
-
-#webcamVideo {
-    padding: 2%;
-}
-
-/* New styles for side-by-side layout */
-.container {
+main {
     display: flex;
-    justify-content: center; /* Center the content horizontally */
-    align-items: center; /* Align items vertically */
-    gap: 40px; /* Space between camera feed and chart */
-    margin: 30px auto; /* Add margin around the container */
-    max-width: 95%; /* Limit the container width */
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px); /* Subtract the header height to remove extra space */
+    padding: 0;
 }
 
-/* Camera feed container */
-#camera-container {
-    position: relative;
-    width: 640px; /* Fixed width for proper aspect ratio */
-    height: 480px; /* Fixed height */
-    border: 2px solid #ddd; /* Optional: Add a border */
-    border-radius: 10px; /* Optional: Rounded corners */
-    overflow: hidden; /* Ensure canvas does not overflow */
-    background-color: #000; /* Black background for better visibility */
+.video-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Video feed styling */
-#camera-feed {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Prevent compression by maintaining aspect ratio */
-    display: block;
+.video-box, .asl-chart-box {
+    flex: 1;
+    max-width: 45%;
+    margin: 0 10px;
+    background-color: #f9f9f9;
+    border: 2px solid #dddddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Canvas overlay */
-#output-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* Prevent interaction with the canvas */
-}
-
-/* ASL chart container */
-#asl-chart-container {
-    text-align: center;
-    max-width: 600px; /* Increased max-width for larger chart */
-}
-
-#asl-chart {
+#video-stream, #output-canvas {
     width: 100%;
     height: auto;
-    border: 2px solid #ddd; /* Optional: Add a border */
-    border-radius: 10px; /* Optional: Rounded corners */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    display: block;
 }

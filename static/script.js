@@ -8,9 +8,8 @@ navigator.mediaDevices.getUserMedia({ video: true })
     .then(stream => {
         video.srcObject = stream;
 
-        // Start processing frames when the video feed is ready
         video.addEventListener('loadeddata', () => {
-            processFrame(); // Start live processing
+            processFrame(); 
         });
     })
     .catch(err => {
@@ -26,18 +25,15 @@ function processFrame() {
         return;
     }
 
-    const TARGET_WIDTH = 320; // Reduce to 320px width
+    const TARGET_WIDTH = 320; 
     const TARGET_HEIGHT = (video.videoHeight / video.videoWidth) * TARGET_WIDTH;
     canvas.width = TARGET_WIDTH;
     canvas.height = TARGET_HEIGHT;
 
-    // Draw the current video frame on the canvas
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // Convert the canvas content to Base64 image
     const frameData = canvas.toDataURL('image/jpeg');
 
-    // Send frame to backend for processing
     fetch('/process_frames', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -50,7 +46,6 @@ function processFrame() {
                 return;
             }
 
-            // Render processed frame on the canvas
             const img = new Image();
             img.onload = () => {
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -61,6 +56,7 @@ function processFrame() {
             console.error("Error processing frame:", error);
         });
 
-    // Request next frame
     requestAnimationFrame(processFrame);
 }
+
+
