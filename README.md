@@ -9,7 +9,8 @@ With the intention of scalability, this project could output key letters just as
 
 A real-time, ASL sign detector designed to recognize and interpret American Sign Language (ASL) gestures. This was created during Colorstack's 2024 Winter Hackathon, so the scope of the image-recognition was limited to the ASL alphabet because of time restraints.
 
-![s](https://github.com/user-attachments/assets/1a7a1250-877f-406d-83e1-e111bbf6df30)
+
+https://github.com/user-attachments/assets/38d2ae34-de5a-46d2-a0ea-07325aa0fc05
 
 
 ## Installation
